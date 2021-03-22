@@ -94,9 +94,12 @@ class DataBaseManager:
             return f'Данные от {created_at} успешно сохранены.'
         except OperationalError as error:
             return f'Возникла ошибка: {error}.'
+        finally:
+            session.close()
 
     def get_all_data_from_db(self):
         """Выгружает все данные из БД."""
         session = self._create_session()
         all_data = session.query(LogsStorage).all()
+        session.close()
         return all_data
